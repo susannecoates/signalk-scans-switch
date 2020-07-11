@@ -9,8 +9,8 @@ module.exports = function (app) {
   let plugin = {}
 
   plugin.id = 'signalk-scans-switch'
-  plugin.name = 'SignalK Plugin for RPI GPIO'
-  plugin.description = 'SignalK Plugin to control switches on RPI GPIO'
+  plugin.name = 'SignalK SCANS Switch Bank I/O'
+  plugin.description = 'SignalK plugin for controlling SCANS switch banks'
 
   plugin.schema = {
     type: 'object',
@@ -18,7 +18,7 @@ module.exports = function (app) {
       rate: {
         title: "Sampling Interval",
         type: 'number',
-        default: 60
+        default: 5
       },
       base_path: {
         type: 'string',
@@ -31,7 +31,47 @@ module.exports = function (app) {
         title: 'SignalK Bank',
         description: 'Switches are arranged in banks, each bank has up to 16 switches',
         default: 'bank0'
-      }	
+      },
+      gpio_scheme: {
+	type: 'array',
+	title: 'GPIO Pin Naming scheme',
+	items: {
+	    type: 'string',
+	    enum: ["Physical (Board)", "Broadcom (BCM)"]
+	},
+	default: ["Broadcom (BCM)"]
+      },	
+      switches: {
+          type: 'array',
+	  title: ' ',
+	  description: 'GPIO to Switch Mapping',
+	  items: {
+	      type: 'object',
+	      title: 'Switch',
+	      required: ["gpio_id","switch_name"],
+	      properties: {		  
+		  gpio_id: {
+		      id: 'gpio_id',
+		      type: 'number',
+		      title: 'GPIO Pin ID',
+		      description: 'depending on the selected pin naming scheme this is either the physical board pin number or the Broadcom (BCM) numeric ID.',
+		      name: 'gpio_id'
+		  },
+		  switch_name: {
+		      id: 'switch_name',
+		      type: 'string',
+		      description: 'The name for the switch',
+		      default: ''
+		  },
+		  default_state: {
+		      id: 'default_state',
+		      type: 'boolean',
+		      description: 'The system power up default for this switch.',
+		      default: false
+		  }
+	      }
+	  }
+      }
     }
   }
 
@@ -71,7 +111,7 @@ module.exports = function (app) {
         switch1 =  0;
         switch2 =  1;
 
-        //console.log(`data = ${JSON.stringify(data, null, 2)}`);
+        console.log(`data = ${JSON.stringify(data, null, 2)}`);
 
         // create message
         var delta = createDeltaMessage(switch0, switch1, switch2)
