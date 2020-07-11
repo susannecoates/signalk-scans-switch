@@ -1,0 +1,27 @@
+{
+  "name": "signalk-scans-switch",
+  "author": "Susanne Coates",
+  "description": "SignalK node server plugin that reads/writes RPI digital IO",
+  "license": "MIT",
+  "homepage": "https://github.com/susannecoates/signalk-scans-switch#readme",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [
+    "signalk-node-server-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susannecoates/signalk-scans-switch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/susannecoates/signalk-scans-switch/issues"
+  },
+  "dependencies": {
+    "i2c-bus": "^1.2.5",
+    "onoff": "^6.0.0",
+    "rpi-gpio": "^2.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
