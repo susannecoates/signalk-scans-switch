@@ -2,11 +2,10 @@
  * Copyright 2020 by Susanne Coates <scoates@susannecoates.net>
  */
 
-const Gpio = require('onoff').Gpio;
-
 module.exports = function (app) {
   let timer = null
   let plugin = {}
+  var Gpio = require('onoff').Gpio
 
   plugin.id = 'signalk-scans-switch'
   plugin.name = 'SignalK SCANS Switch Bank I/O'
@@ -26,20 +25,14 @@ module.exports = function (app) {
         description: 'This is used to build the path in Signal K. It will be appended to \'electrical\'',
         default: 'scans.switch'
       },
-      bank: {
-        type: 'string',
-        title: 'SignalK Bank',
-        description: 'Switches are arranged in banks, each bank has up to 16 switches',
-        default: 'bank0'
-      },
       gpio_scheme: {
 	type: 'array',
 	title: 'GPIO Pin Naming scheme',
 	items: {
 	    type: 'string',
-	    enum: ["Physical (Board)", "Broadcom (BCM)"]
-	},
-	default: ["Broadcom (BCM)"]
+  	    enum: ["Physical (Board)", "Broadcom (BCM)"],
+	    default: ["Broadcom (BCM)"]
+	}
       },	
       switches: {
           type: 'array',
@@ -54,7 +47,7 @@ module.exports = function (app) {
 		      id: 'gpio_id',
 		      type: 'number',
 		      title: 'GPIO Pin ID',
-		      description: 'depending on the selected pin naming scheme this is either the physical board pin number or the Broadcom (BCM) numeric ID.',
+		      description: 'Depending on the selected pin naming scheme, this is either the physical board pin number or the Broadcom (BCM) numeric ID.',
 		      name: 'gpio_id'
 		  },
 		  switch_name: {
@@ -63,11 +56,11 @@ module.exports = function (app) {
 		      description: 'The name for the switch',
 		      default: ''
 		  },
-		  default_state: {
-		      id: 'default_state',
-		      type: 'boolean',
-		      description: 'The system power up default for this switch.',
-		      default: false
+		  switch_state: {
+		      id: 'switch_state',
+		      type: 'number',
+		      description: 'The current state of the switch.',
+		      default: 0
 		  }
 	      }
 	  }
@@ -75,10 +68,24 @@ module.exports = function (app) {
     }
   }
 
-  plugin.start = function (options) {
-
-    function createDeltaMessage (switch0, switch1, switch2) {
-      return {
+    plugin.start = function (options) {
+	function createDeltaMessage () {
+	var valuesArray = [];
+        for(i=0; i < options.switches.length; i++){
+	  var machine_name = options.switches[i].switch_name.toLowerCase().replace(/\s/,"_");
+	  var value =  options.switches[i].switch_state;
+	  eval("var " + machine_name + " = new Gpio(" + options.switches[i].gpio_id + ", 'out');");
+	  eval(machine_name + ".writeSync(" + value + ");"); 
+	  valuesArray.push(
+	      {
+	      'path': 'electrical.' + options.base_path + '.' +  machine_name,
+              'value': value
+	      }
+	  );
+	    
+	}
+	  
+      var deltaArray = {
         'context': 'vessels.' + app.selfId,
         'updates': [
           {
@@ -86,41 +93,24 @@ module.exports = function (app) {
               'label': plugin.id
             },
             'timestamp': (new Date()).toISOString(),
-            'values': [
-              {
-                'path': 'electrical.' + options.base_path + '.' + options.bank + '.deck_light',
-                'value': switch0
-              }, {
-                'path': 'electrical.' + options.base_path + '.' + options.bank + '.steaming_light',
-                'value': switch1
-              }, {
-                'path': 'electrical.' + options.base_path + '.' + options.bank + '.bow_light',
-                'value': switch2
-              }, {
-                'path': 'electrical.' + options.base_path + '.' + options.bank + '.stern_light',
-                'value': switch2
-              }
-            ]
+            'values': valuesArray
           }
         ]
       }
+	  //console.log(`data = ${JSON.stringify(deltaArray, null, 2)}`);
+      return deltaArray;
     }
 
     function readBankState() {
-        switch0 =  1;
-        switch1 =  0;
-        switch2 =  1;
-
-        console.log(`data = ${JSON.stringify(data, null, 2)}`);
-
         // create message
-        var delta = createDeltaMessage(switch0, switch1, switch2)
+        var delta = createDeltaMessage()
 
         // send temperature
         app.handleMessage(plugin.id, delta)
     }
 
-    timer = setInterval(readBankState, options.rate * 1000);
+      timer = setInterval(readBankState, options.rate * 1000);
+      
   }
 
   plugin.stop = function () {
