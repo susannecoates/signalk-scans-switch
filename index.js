@@ -1,5 +1,20 @@
 /*
  * Copyright 2020 by Susanne Coates <scoates@susannecoates.net>
+ *
+ *   This file is part of scans_signalk_switch.
+ *
+ *   scans_signalk_switch is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License.
+ *
+ *   scans_signalk_switch is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with scans_signalk_switch.  If not, see <https://www.gnu.org/licenses/>.
+ *
  */
 
 module.exports = function (app) {
@@ -11,7 +26,8 @@ module.exports = function (app) {
     let pluginOptions
     
     var Gpio = require('onoff').Gpio
-
+    var gpiop = require('rpi-gpio').promise;
+    
     plugin.id = 'signalk-scans-switch'
     plugin.name = 'SignalK SCANS Switch Bank I/O'
     plugin.description = 'SignalK plugin for controlling SCANS switch banks'
@@ -82,7 +98,7 @@ module.exports = function (app) {
     function actionHandler(context, path, dSource, value, cb){
 	const parts = path.split('.')
 	//match the parts[2] with the options to find the gpio assignment
-	//app.debug(`setting ${path} to ${value}`)
+	app.debug(`setting ${path} to ${value}`)
 	configuredGPIO[parts[2]].writeSync(value);
 	return { state: 'PENDING' }
     }
@@ -97,7 +113,6 @@ module.exports = function (app) {
 	    // Set default values
 	    configuredGPIO[machine_name].writeSync(value);
 	}
-	app.debug(configuredGPIO['anchorlight']);
 	pluginOptions = options;
 
 	let command = {
@@ -138,7 +153,7 @@ module.exports = function (app) {
 		configuredGPIO[machine_name].setDirection['out'];
 		valuesArray.push(
 		    {
-			'path': 'electrical.' + options.base_path + '.' +  machine_name,
+			'path': 'electrical.' + options.base_path + '.' +  machine_name + ".state",
 			'value': value
 		    }
 		);
