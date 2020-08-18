@@ -1,6 +1,6 @@
 ![SCANS Logo](https://susannecoates.net/sites/default/files/2020-08/scans_logo.jpg)
 # SignalK SCANS Switch
-SignalK Node.js plugin for controlling switches connected to GPIO pins on the Raspberry Pi. 
+SignalK Node.js plugin for controlling switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls
 
 ## LICENSE
 scans_signalk_swich is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation in version 3 of the License. \
@@ -17,7 +17,13 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
     $ cd ~/.signalk/node_modules
     $ git clone https://github.com/susannecoates/signalk_scans_switch.git
 
-## Using the Plugin to Controlling Digital sSitches
+## Configuring the Plugin
+
+## Using the Plugin to Control Digital Switches
+
+### RPI GPIO Testing Setup
+
+### ReSTful Operations
 1. generate a version 4 UUID
 Generate a version 4 UUID on the RPI command line by typing:\
 
@@ -34,20 +40,34 @@ This UUID will be used as the requestID for the next step. Now you need to get a
 if your SignalK server is at 192.168.1.10, and your user name on the server is system, and your password is system123, then 
 Using cURL this would look like:
 
-    curl -X POST \
-      http://192.168.1.10/signalk/v1/auth/login \
-      -H 'cache-control: no-cache' \
-      -H 'content-type: application/json' \
-      -d '{
-      "requestId": "fddd9e58-e0e7-11ea-b681-07151df731b6",
-      "username": "system",
-      "password": "system123"
-    }'
+    <?php
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "http://192.168.1.10/signalk/v1/auth/login",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => "{\n  \"requestId\": \"fddd9e58-e0e7-11ea-b681-07151df731b6\",\n  \"username\": \"system\",\n  \"password\": \"system123\"\n}",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache",
+        "content-type: application/json"
+      ),
+    ));
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    if ($err) {
+      echo "cURL Error #:" . $err;
+    } else {
+      echo $response;
+    }
 
 or in NodeJS this would look like
 
     var http = require("http");
-
     var options = {
       "method": "POST",
       "hostname": "192.168.1.10",
@@ -58,20 +78,16 @@ or in NodeJS this would look like
         "cache-control": "no-cache",
       }
     };
-
     var req = http.request(options, function (res) {
       var chunks = [];
-
       res.on("data", function (chunk) {
         chunks.push(chunk);
       });
-
       res.on("end", function () {
         var body = Buffer.concat(chunks);
         console.log(body.toString());
       });
     });
-
     req.write(JSON.stringify({ requestId: 'fddd9e58-e0e7-11ea-b681-07151df731b6',
       username: 'system',
       password: 'system123' }));
@@ -80,7 +96,7 @@ or in NodeJS this would look like
 Whichever method you choose to use the server should respond back (in JSON format) with the token.
 
     {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw"
     }
     
 3. Make a PUT request
@@ -89,7 +105,6 @@ Using cURL in PHP
 
     <?php
     $curl = curl_init();
-
     curl_setopt_array($curl, array(
       CURLOPT_PORT => "80",
       CURLOPT_URL => "http://192.168.1.10:80/signalk/v1/api/vessels/self/electrical/switches/platformlights.state",
@@ -106,12 +121,9 @@ Using cURL in PHP
         "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw"
       ),
     ));
-
     $response = curl_exec($curl);
     $err = curl_error($curl);
-
     curl_close($curl);
-
     if ($err) {
       echo "cURL Error #:" . $err;
     } else {
