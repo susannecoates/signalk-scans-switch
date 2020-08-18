@@ -17,7 +17,8 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
     $ cd ~/.signalk/node_modules
     $ git clone https://github.com/susannecoates/signalk_scans_switch.git
 
-## Controlling digital switches on the Raspberry PI
+## Using the Plugin to Controlling Digital sSitches
+1. generate a version 4 UUID
 Generate a version 4 UUID on the RPI command line by typing:\
 
     uuid
@@ -27,6 +28,8 @@ which will produce output like this:\
     fddd9e58-e0e7-11ea-b681-07151df731b6
 
 This UUID will be used as the requestID for the next step. Now you need to get authenticate with the server and get a token. 
+
+2. Get a token
 
 if your SignalK server is at 192.168.1.10, and your user name on the server is system, and your password is system123, then 
 Using cURL this would look like:
@@ -79,3 +82,84 @@ Whichever method you choose to use the server should respond back (in JSON forma
     {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw"
     }
+    
+3. Make a PUT request
+
+Using cURL in PHP
+
+    <?php
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_PORT => "80",
+      CURLOPT_URL => "http://192.168.1.10:80/signalk/v1/api/vessels/self/electrical/switches/platformlights.state",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "PUT",
+      CURLOPT_POSTFIELDS => "{\n   \"value\": 1\n}",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache",
+        "content-type: application/json",
+        "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw"
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+      echo "cURL Error #:" . $err;
+    } else {
+      echo $response;
+    }
+
+In NodsJS
+
+    var http = require("http");
+    var options = {
+      "method": "PUT",
+      "hostname": "192.168.0.21",
+      "port": "80",
+      "path": "/signalk/v1/api/vessels/self/electrical/switches/platformlights.state",
+      "headers": {
+        "content-type": "application/json",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw",
+        "cache-control": "no-cache",
+        "postman-token": "bbb04c10-bca4-13e0-ef83-14d8a2099fa0"
+      }
+    };
+
+    var req = http.request(options, function (res) {
+      var chunks = [];
+
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+
+      res.on("end", function () {
+        var body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
+
+    req.write(JSON.stringify({ value: 1 }));
+    req.end();
+    }
+    
+If successful, the server will respond with:
+
+    {
+      "state": "PENDING",
+      "requestId": "63effa0f-9fcd-471a-92b9-7d5d6a34d0c8",
+      "statusCode": 202,
+      "href": "/signalk/v1/requests/63effa0f-9fcd-471a-92b9-7d5d6a34d0c8",
+      "user": "system",
+      "action": {
+        "href": "/signalk/v1/requests/63effa0f-9fcd-471a-92b9-7d5d6a34d0c8"
+    }
+
