@@ -19,6 +19,8 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
 
 ## Configuring the Plugin
 
+![SCANS Plugin Configuration](https://susannecoates.net/sites/default/files/2020-08/plugin_configuration_1.jpg)
+
 ## Using the Plugin to Control Digital Switches
 
 ### RPI GPIO Testing Setup
