@@ -23,7 +23,7 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
 
 ### RPI GPIO Testing Setup
 
-### ReSTful Operations
+### ReSTful Interactions with the SignalK Server
 1. generate a version 4 UUID
 Generate a version 4 UUID on the RPI command line by typing:\
 
