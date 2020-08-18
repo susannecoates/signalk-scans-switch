@@ -19,7 +19,7 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
 
 ## Configuring the Plugin
 
-![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/plugin_configuration_1.jpg
+![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/plugin_configuration_1.jpg)
 
 ## Using the Plugin to Control Digital Switches
 
