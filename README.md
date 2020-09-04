@@ -22,8 +22,10 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/plugin_configuration_1.jpg)
 
 ## Using the Plugin to Control Digital Switches
+For information on the GPIO pins for the RPI please see: https://elinux.org/RPi_Low-level_peripherals
 
 ### RPI GPIO Testing Setup
+A convienant way to test the operation of the plugin is to use LED's connected to the GPIO pins using a 10K ohm 1% resistor. This can either be done on a breadboard or using a setup like that shown in the photo below. The setup in the photo uses an RPI 3B+ on a DIN rail mount screw terminal (breakout) block adapter module connected to a DIN rail mount 16 LED indicator light module. Either way will allow you to visualise the state of the desired GPIO pins to verify the correct operation of the module and of your GET/PUT requests.
 
 ### ReSTful Interactions with the SignalK Server
 1. generate a version 4 UUID
