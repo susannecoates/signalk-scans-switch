@@ -1,6 +1,6 @@
 ![SCANS Logo](https://susannecoates.net/sites/default/files/2020-08/scans_logo.jpg)
 # SignalK SCANS Switch
-SignalK Node.js plugin for controlling switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls using GET and PUT to read the GPIO pin state and change them. The plugin utilises Brain Cooke's onoff library.
+SignalK Node.js plugin for ReSTful control of switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls using GET and PUT to read and write the GPIO pin state. The purpose of the plugin is to provide a conveniant way of controlling lights and other equipment from OpenCPN plugins, mobile applications, web browsers, and other type of applications. The plugin utilises Brain Cooke's onoff library.
 
 ## LICENSE
 scans_signalk_swich is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation in version 3 of the License.
@@ -18,7 +18,7 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
     $ git clone https://github.com/susannecoates/signalk_scans_switch.git
 
 ## Configuring the Plugin
-After installing the plugin you should be able to navigate to the signalk server using your browser, login as admin, and go to: Server->Plugin Configuration. THe scans switch plugin sould be listed among the available plugins. Expand the plugin's section and add the information shown below (Be sure to tick the enable box):
+After installing the plugin you should be able to navigate to the signalk server using your browser, login as admin, and go to: Server->Plugin Configuration. The scans switch plugin should be listed among the available plugins. Expand the plugin's section and add the information shown below. Be sure to tick the "Active" box to enable the plugin.
 
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/scans-plugin-config-1.png)
 
@@ -131,13 +131,17 @@ Whichever method you choose to use the server should respond back (in JSON forma
     
 3. Making the PUT request
 
+![Postman put headers screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-headers.png)
+
+![Postman put body screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-body.png)
+
 Using cURL in PHP
 
     <?php
     $curl = curl_init();
     curl_setopt_array($curl, array(
       CURLOPT_PORT => "80",
-      CURLOPT_URL => "http://192.168.1.10:80/signalk/v1/api/vessels/self/electrical/switches/platformlights.state",
+      CURLOPT_URL => "http://192.168.0.21:80/signalk/v1/api/vessels/self/electrical/switches/bowlight.state",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -167,7 +171,7 @@ In NodsJS
       "method": "PUT",
       "hostname": "192.168.0.21",
       "port": "80",
-      "path": "/signalk/v1/api/vessels/self/electrical/switches/platformlights.state",
+      "path": "/signalk/v1/api/vessels/self/electrical/switches/bowlight.state",
       "headers": {
         "content-type": "application/json",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN5c3RlbSIsImlhdCI6MTU5NzcxMDY0MCwiZXhwIjoxNTk3Nzk3MDQwfQ.hHYmpHmIyONFVUClhnXAPGP81-s1PU90ae8D-bLllGw",
