@@ -38,10 +38,19 @@ A convienant way to test the operation of the plugin is to use LED's connected t
 
 ### ReSTful Interactions with the SignalK Server
 
-To verify that things are working you should now be able to perform a GET request. Using Postman:
+To verify that things are working you should now be able to perform a GET request. You can do this with your browser by entering: 
+
+    http://192.168.0.21/signalk/v1/api/vessels/self/electrical
+    
+in the address bar. NOTE you'll need to replace the address 192.168.0.21 with the address of your signalk server. The server will reply with a JSON formatted message:
+
+    {"switches":{"bowlight":{"state":{"value":0,"$source":"signalk-scans-switch.XX","timestamp":"2020-09-05T17:33:47.602Z"}}}}
+
+Using Postman for the GET will generate the same response, but in a more readable format:
 
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-get.png)
 
+#### Changing the state of the switch with PUT ####
 1. generate a version 4 UUID
 Generate a version 4 UUID on the RPI command line by typing:
 
@@ -56,6 +65,7 @@ This UUID will be used as the requestID for the next step. Now you need to authe
 2. Geting the access token
 
 If your SignalK server is at 192.168.0.21, and your user name on the server is **system**, and your password is **system**, then using Postman the request would be set up as follows:
+
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-get-token.png)
 
 Using cURL the request would look like:
