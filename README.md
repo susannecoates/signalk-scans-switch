@@ -68,6 +68,8 @@ If your SignalK server is at 192.168.0.21, and your user name on the server is *
 
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-get-token.png)
 
+**Important Note**: You must have the correct mime type selected "JSON (application/json" otherwise the server will not understand your request and you will get an error. e.g. "Missing Parameters".
+
 Using cURL the request would look like:
 
     <?php
