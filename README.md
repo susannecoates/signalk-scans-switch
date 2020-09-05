@@ -40,9 +40,9 @@ A convienant way to test the operation of the plugin is to use LED's connected t
 
 ![Photo of hardware for testing](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/IMG_4891.jpg)
 
-Once you have everything working with the LED's test setup it's relativel straightforward to replace the LED's with solid state switches. Just always be mindful of how much current the switch needs to drive the control input versus what the GPIO pin can provide. Ideally, the solid state switch should have optoisolated control inputs.
+Once you have everything working with the LED's test setup it's relativly straightforward to replace the LED's with solid state switches. Always be mindful of how much current the switch needs to drive its control input versus what the GPIO pin can provide. Ideally, the solid state switch should have optoisolated control inputs.
 
-Another handy tool for testing is an ReST API Development tool that will let you test your queries and generate code in a variety of languages. The examples below use [Postman](http://postman.com) which, at the time of this writing, is freely available as an app for Google Chrome.
+Another handy tool for testing is a **ReST API Development tool**, which will allow you to test your queries and generate code in a variety of languages. The examples below use [Postman](http://postman.com) which, at the time of this writing, is freely available as an app for Google Chrome.
 
 ### ReSTful Interactions with the SignalK Server
 
