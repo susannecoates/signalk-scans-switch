@@ -1,7 +1,7 @@
 {
   "name": "signalk-scans-switch",
   "author": "Susanne Coates",
-  "description": "SignalK node server plugin that reads/writes RPI digital IO",
+  "description": "SignalK node server plugin to read/write RPI GPIO",
   "license": "GPLv3",
   "homepage": "https://github.com/susannecoates/signalk-scans-switch#readme",
   "version": "1.0.0",
