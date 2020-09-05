@@ -1,4 +1,4 @@
-![SCANS Logo](https://susannecoates.net/sites/default/files/2020-08/scans_logo.jpg)
+![SCANS Logo](https://susannecoates.net/sites/default/files/2020-09/scans_logo.jpg)
 # SignalK SCANS Switch
 SignalK Node.js plugin for ReSTful control of switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls using GET and PUT to read and write the GPIO pin state. The purpose of the plugin is to provide a conveniant way of controlling lights and other equipment from OpenCPN plugins, mobile applications, web browsers, and other type of applications. The plugin utilises Brain Cooke's onoff library.
 
