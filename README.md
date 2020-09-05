@@ -1,6 +1,6 @@
 ![SCANS Logo](https://susannecoates.net/sites/default/files/2020-08/scans_logo.jpg)
 # SignalK SCANS Switch
-SignalK Node.js plugin for controlling switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls using GET and PUT to read the GPIO pin state and change it.
+SignalK Node.js plugin for controlling switches connected to GPIO pins on the Raspberry Pi. The plugin allows you to make ReSTful calls using GET and PUT to read the GPIO pin state and change them. The plugin utilises Brain Cooke's onoff library.
 
 ## LICENSE
 scans_signalk_swich is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation in version 3 of the License. \
@@ -10,9 +10,9 @@ scans_signalk_switch is distributed in the hope that it will be useful, but WITH
 You should have received a copy of the GNU General Public License along with scans_signalk_switch.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Installation
-This short tutorial assuem you an installed and working signalK Node JS server. If not, the software and instructions for doing this are here: https://github.com/SignalK/signalk-server-node 
+This short tutorial assumes that you have an installed and working signalK Node JS server. If not, the software and instructions for doing this are here: https://github.com/SignalK/signalk-server-node 
 
-Plugins are installed in the node_modules directory inside SignalK server's configuration directory ($HOME/.signalk by default). 
+Plugins are installed in the node_modules directory inside SignalK server's configuration directory ($HOME/.signalk by default).  
 
     $ cd ~/.signalk/node_modules
     $ git clone https://github.com/susannecoates/signalk_scans_switch.git
