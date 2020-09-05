@@ -38,7 +38,7 @@ For information on the GPIO pins for the RPI please see: https://elinux.org/RPi_
 ### RPI GPIO Testing Setup
 A convienant way to test the operation of the plugin is to use LED's connected to the GPIO pins using a 10K ohm 1% resistor. This can either be done on a breadboard or using a setup like that shown in the photo below. The setup in the photo uses an RPI 3B+ on a DIN rail mount screw terminal (breakout) block adapter module connected to a DIN rail mount 16 LED indicator light module. Either way will allow you to visualise the state of the desired GPIO pins to verify the correct operation of the module and of your GET/PUT requests. 
 
-![Photo of hardware for testing](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/img_4891.jpg)
+![Photo of hardware for testing](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/IMG_4891.jpg)
 
 Once you have everything working with the LED's test setup it's relativel straightforward to replace the LED's with solid state switches. Just always be mindful of how much current the switch needs to drive the control input versus what the GPIO pin can provide. Ideally, the solid state switch should have optoisolated control inputs.
 
