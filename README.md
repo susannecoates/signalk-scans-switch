@@ -140,8 +140,11 @@ Whichever method you choose to use the server should respond back (in JSON forma
     }
     
 3. Making the PUT request
+In postman add the following to the headers:
 
 ![Postman put headers screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-headers.png)
+
+The body of the request should look like the body secion below. When you click **Send** the server should respondback with the "Pending" status message as shown.
 
 ![Postman put body screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-body.png)
 
