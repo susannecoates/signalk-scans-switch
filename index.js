@@ -26,11 +26,10 @@ module.exports = function (app) {
     let pluginOptions
     
     var Gpio = require('onoff').Gpio
-    var gpiop = require('rpi-gpio').promise;
     
     plugin.id = 'signalk-scans-switch'
-    plugin.name = 'SignalK SCANS Switch Bank I/O'
-    plugin.description = 'SignalK plugin for controlling SCANS switch banks'
+    plugin.name = 'SignalK SCANS Switch Control'
+    plugin.description = 'SignalK plugin for controlling switches connected to RPI GPIO.'
     
     plugin.schema = {
 	type: 'object',
@@ -45,15 +44,6 @@ module.exports = function (app) {
 		title: 'SignalK Base Path',
 		description: 'This is used to build the path in Signal K. It will be appended to \'electrical\'',
 		default: 'switches'
-	    },
-	    gpio_scheme: {
-		type: 'array',
-		title: 'GPIO Pin Naming scheme',
-		items: {
-		    type: 'string',
-  		    enum: ["Board", "BCM"],
-		    default: ["BCM"]
-		}
 	    },	
 	    switches: {
 		type: 'array',
@@ -61,26 +51,28 @@ module.exports = function (app) {
 		description: 'GPIO to Switch Mapping',
 		items: {
 		    type: 'object',
-		    title: 'Switch',
+		    title: 'Switch Configuration',
 		    required: ["gpio_id","switch_name"],
 		    properties: {		  
 			gpio_id: {
 			    id: 'gpio_id',
 			    type: 'number',
 			    title: 'GPIO Pin ID',
-			    description: 'Depending on the selected pin naming scheme, this is either the physical board pin number or the Broadcom (BCM) numeric ID.',
+			    description: 'The Broadcom (BCM) ID of the RPI GPIO pin to which the switch is connected .',
 			    name: 'gpio_id'
 			},
 			switch_name: {
-			    id: 'switch_name',
+			    id: 'switch_id',
 			    type: 'string',
-			    description: 'The name for the switch',
+			    title: 'Identifier',
+			    description: 'The identifier that will be used in GET/PUT requests.<BR> NOTE: Names will be converted to lower case and spaces removed. e.g. Bow Light becomes bowlight.',
 			    default: ''
 			},
 			switch_state: {
 			    id: 'switch_state',
 			    type: 'number',
-			    description: 'The current state of the switch.',
+			    title: 'Default State',
+			    description: 'The state of the switch at system initilisation.',
 			    default: 0
 			}
 		    }
