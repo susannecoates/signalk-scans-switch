@@ -15,10 +15,12 @@ This short tutorial assumes that you have an installed and working signalK Node 
 Plugins are installed in the node_modules directory inside SignalK server's configuration directory ($HOME/.signalk by default).  
 
     $ cd ~/.signalk/node_modules
-    $ git clone https://github.com/susannecoates/signalk_scans_switch.git
+    $ git clone https://github.com/susannecoates/signalk-scans-switch.git
+
+login to your Signalk server as an administrative user and restart the server.
 
 ## Configuring the Plugin
-After installing the plugin you should be able to navigate to the signalk server using your browser, login as admin, and go to: Server->Plugin Configuration. The scans switch plugin should be listed among the available plugins. Expand the plugin's section and add the information shown below. Be sure to tick the "Active" box to enable the plugin.
+After installing the plugin you should be able to navigate to the signalk server using your browser, login as admin, and go to: Server->Plugin Config. The scans switch plugin should be listed among the available plugins. Expand the plugin's section and add the information shown below. Be sure to tick the "Active" box to enable the plugin.
 
 ![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/scans-plugin-config-1.png)
 
