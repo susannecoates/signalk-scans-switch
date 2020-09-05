@@ -18,8 +18,17 @@ Plugins are installed in the node_modules directory inside SignalK server's conf
     $ git clone https://github.com/susannecoates/signalk_scans_switch.git
 
 ## Configuring the Plugin
+After installing the plugin you should be able to navigate to the signalk server using your browser, login as admin, and go to: Server->Plugin Configuration. THe scans switch plugin sould be listed among the available plugins. Expand the plugin's section and add the information shown below (Be sure to tick the enable box):
 
-![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/plugin_configuration_1.jpg)
+![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/scans-plugin-config-1.png)
+
+Now click "+" and add a switch as shown in the screenshot:
+
+![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/scans-plugin-config-2.png)
+
+Now click **Submit** to save the changes and restart the server to start the plugin.
+
+This switch will be used in the example below.
 
 ## Using the Plugin to Control Digital Switches
 For information on the GPIO pins for the RPI please see: https://elinux.org/RPi_Low-level_peripherals
@@ -28,6 +37,11 @@ For information on the GPIO pins for the RPI please see: https://elinux.org/RPi_
 A convienant way to test the operation of the plugin is to use LED's connected to the GPIO pins using a 10K ohm 1% resistor. This can either be done on a breadboard or using a setup like that shown in the photo below. The setup in the photo uses an RPI 3B+ on a DIN rail mount screw terminal (breakout) block adapter module connected to a DIN rail mount 16 LED indicator light module. Either way will allow you to visualise the state of the desired GPIO pins to verify the correct operation of the module and of your GET/PUT requests. Another handy tool for testing is an ReST API Development tool that will let you test your queries and generate code in a variety of languages. The examples below use [Postman](http://postman.com) which, at the time of this writing, is freely available as an app for Google Chrome.
 
 ### ReSTful Interactions with the SignalK Server
+
+To verify that things are working you should now be able to perform a GET request. Using Postman:
+
+![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-get.png)
+
 1. generate a version 4 UUID
 Generate a version 4 UUID on the RPI command line by typing:
 
@@ -42,7 +56,7 @@ This UUID will be used as the requestID for the next step. Now you need to authe
 2. Geting the access token
 
 If your SignalK server is at 192.168.0.21, and your user name on the server is **system**, and your password is **system**, then using Postman the request would be set up as follows:
-
+![SCANS Plugin Configuration](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-get-token.png)
 
 Using cURL the request would look like:
 
