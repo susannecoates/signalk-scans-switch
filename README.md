@@ -41,7 +41,7 @@ This UUID will be used as the requestID for the next step. Now you need to authe
 
 2. Geting the access token
 
-If your SignalK server is at 192.168.0.21, and your user name on the server is system, and your password is system, then using Postman the request would be set up as follows:
+If your SignalK server is at 192.168.0.21, and your user name on the server is **system**, and your password is **system**, then using Postman the request would be set up as follows:
 
 
 Using cURL the request would look like:
