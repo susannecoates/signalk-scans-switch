@@ -99,7 +99,7 @@ module.exports = function (app) {
 	//app.debug(options);
 	//Initialise the GPIO here and store in configuredGPIO array
 	for(i=0; i < options.switches.length; i++){
-	    var machine_name = options.switches[i].switch_name.toLowerCase().replace(/\s/,"");
+	    var machine_name = options.switches[i].switch_name.toLowerCase().replace(/\s/,"_");
 	    var value =  options.switches[i].switch_state;
 	    configuredGPIO[machine_name] = new Gpio(options.switches[i].gpio_id,'out');
 	    // Set default values
@@ -139,7 +139,7 @@ module.exports = function (app) {
 	    var machine_name
 	    var value
             for(i=0; i < options.switches.length; i++){
-		machine_name = options.switches[i].switch_name.toLowerCase().replace(/\s/,"");
+		machine_name = options.switches[i].switch_name.toLowerCase().replace(/\s/,"_");
 		configuredGPIO[machine_name].setDirection['in'];
 		value = configuredGPIO[machine_name].readSync(value);
 		configuredGPIO[machine_name].setDirection['out'];
