@@ -36,7 +36,13 @@ This switch will be used in the example below.
 For information on the GPIO pins for the RPI please see: https://elinux.org/RPi_Low-level_peripherals
 
 ### RPI GPIO Testing Setup
-A convienant way to test the operation of the plugin is to use LED's connected to the GPIO pins using a 10K ohm 1% resistor. This can either be done on a breadboard or using a setup like that shown in the photo below. The setup in the photo uses an RPI 3B+ on a DIN rail mount screw terminal (breakout) block adapter module connected to a DIN rail mount 16 LED indicator light module. Either way will allow you to visualise the state of the desired GPIO pins to verify the correct operation of the module and of your GET/PUT requests. Another handy tool for testing is an ReST API Development tool that will let you test your queries and generate code in a variety of languages. The examples below use [Postman](http://postman.com) which, at the time of this writing, is freely available as an app for Google Chrome.
+A convienant way to test the operation of the plugin is to use LED's connected to the GPIO pins using a 10K ohm 1% resistor. This can either be done on a breadboard or using a setup like that shown in the photo below. The setup in the photo uses an RPI 3B+ on a DIN rail mount screw terminal (breakout) block adapter module connected to a DIN rail mount 16 LED indicator light module. Either way will allow you to visualise the state of the desired GPIO pins to verify the correct operation of the module and of your GET/PUT requests. 
+
+![Photo of hardware for testing](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/IMG_4891.jpg)
+
+Once you have everything working with the LED's test setup it's relativly straightforward to replace the LED's with solid state switches. Always be mindful of how much current the switch needs to drive its control input versus what the GPIO pin can provide. Ideally, the solid state switch should have optoisolated control inputs.
+
+Another handy tool for testing is a **ReST API Development tool**, which will allow you to test your queries and generate code in a variety of languages. The examples below use [Postman](http://postman.com) which, at the time of this writing, is freely available as an app for Google Chrome.
 
 ### ReSTful Interactions with the SignalK Server
 
@@ -134,8 +140,11 @@ Whichever method you choose to use the server should respond back (in JSON forma
     }
     
 3. Making the PUT request
+In postman add the following to the headers:
 
 ![Postman put headers screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-headers.png)
+
+The body of the request should look like the body secion below. When you click **Send** the server should respondback with the "Pending" status message as shown.
 
 ![Postman put body screenshot](https://github.com/susannecoates/signalk-scans-switch/blob/master/docs/images/postman-put-body.png)
 
