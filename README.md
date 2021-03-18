@@ -46,7 +46,7 @@ Another handy tool for testing is a **ReST API Development tool**, which will al
 
 ### ReSTful Interactions with the SignalK Server
 
-NOTE: The SignalK server used for the examples below is configured to listen for requests on the default HTTP port 80 and as such the port need not be specified in the URL (e.g. http://192.168.0.21 is the same as http://192.168.0.21:80). If you have configured your server to use a different port, say 3000, you must incllude the port in the URL in the examples below (e.g. http://192.168.0.21:3000).
+NOTE: The SignalK server used for the examples below is configured to listen for requests on the default HTTP port 80 and as such the port need not be specified in the URL (e.g. http://192.168.0.21 is the same as http://192.168.0.21:80). If you have configured your server to use a different port, say 3000, you must include the port in the URL (e.g. http://192.168.0.21:3000).
 
 To verify that things are working you should now be able to perform a GET request. You can do this with your browser by entering: 
 
