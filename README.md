@@ -46,6 +46,8 @@ Another handy tool for testing is a **ReST API Development tool**, which will al
 
 ### ReSTful Interactions with the SignalK Server
 
+NOTE: The SignalK server used for the examples below is configured to listen for requests on the default HTTP port 80 and as such the port need not be specified in the URL (e.g. http://192.168.0.21 is the same as http://192.168.0.21:80). If you have configured your server to use a different port, say 3000, you must incllude the port in the URL in the examples below (e.g. http://192.168.0.21:3000).
+
 To verify that things are working you should now be able to perform a GET request. You can do this with your browser by entering: 
 
     http://192.168.0.21/signalk/v1/api/vessels/self/electrical
@@ -60,6 +62,7 @@ Using Postman for the GET will generate the same response, but in a more readabl
 
 #### Changing the state of the switch with PUT ####
 1. generate a version 4 UUID
+
 Generate a version 4 UUID on the RPI command line by typing:
 
     uuid
@@ -70,7 +73,7 @@ which will produce output like this:
 
 This UUID will be used as the requestID for the next step. Now you need to authenticate with the server and get a token. 
 
-2. Geting the access token
+2. Getting the access token
 
 If your SignalK server is at 192.168.0.21, and your user name on the server is **system**, and your password is **system**, then using Postman the request would be set up as follows:
 
