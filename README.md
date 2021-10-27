@@ -213,8 +213,6 @@ In NodsJS
     req.end();
     }
     
-    Support this project: 
-    https://commerce.coinbase.com/checkout/75bec34c-d886-4f58-9c52-705a5935fc4b
     
 If successful, the server will respond with:
 
@@ -230,4 +228,4 @@ If successful, the server will respond with:
     
 And you should see the state of the switch (or LED) change.
 
-If you have found this information useful please consider [donating to this project with cryptocurrency] <https://commerce.coinbase.com/checkout/75bec34c-d886-4f58-9c52-705a5935fc4b>.
+If you have found this information useful please consider [donating to this project with cryptocurrency](https://commerce.coinbase.com/checkout/75bec34c-d886-4f58-9c52-705a5935fc4b)
